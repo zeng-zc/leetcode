@@ -18,6 +18,7 @@ using namespace std;
 
 class Solution {
     public:
+        // using stack to record steps
         bool canJump(vector<int>& nums) {
             stack<int> stk;
             int i=0;
@@ -45,8 +46,8 @@ class Solution {
 /* notes:
  * This version is Time Limit Exceeded on leetcode.
  * There are too many duplicated pop and push.
- * And the logic is a bit complicated, it's easy to make a mistake.
- * Now find a more effective solution.
+ * And the logic is a bit complicated, easy to make a mistake.
+ * Now find a more effective and simple solution.
  */
 
         bool canJump2(vector<int>& nums) {
@@ -55,7 +56,9 @@ class Solution {
             if(size == 0 || size == 1)
                 return true;
             for(int i=0; i<size-1; i++){
-                if(i <= coverage && i + nums[i] > coverage)
+                if(i > coverage)
+                    return false;
+                if(i + nums[i] > coverage)
                     coverage = i + nums[i];
                 if(coverage >= size-1)
                     return true;

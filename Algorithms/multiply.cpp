@@ -24,7 +24,10 @@ public:
             longer = &num1;
         }
         for(int i = shortter->size()-1; i>=0; i--){
-            auto cur = this->multi_one_digit(*longer, (*shortter)[i]-'0');
+            auto digit = (*shortter)[i]-'0';
+            if(digit == 0)
+                continue;  // return in advance
+            auto cur = this->multi_one_digit(*longer, digit);
             string zero(shortter->size()-i-1, '0');
             cur.insert(cur.end(), zero.begin(), zero.end());
             res = addBinary(res, cur);
