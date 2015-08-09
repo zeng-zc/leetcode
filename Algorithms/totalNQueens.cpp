@@ -35,12 +35,11 @@ public:
         }
     }
 
-    // return whether a queen can be placed in the current row.
-    bool placeRow(vector<string>& board, int row){
+    void placeRow(vector<string>& board, int row){
         auto N = board.size();
         if(row > N-1){ // out of bound
             result++;
-            return false;
+            return;
         }
         for(int col=0; col<N; col++){
             board[row][col]='Q';
@@ -49,7 +48,7 @@ public:
             }
             board[row][col]='.';
         }
-        return true;
+        return;
     }
 
     bool isValidGrid(vector<string>& board, int row, int col){
