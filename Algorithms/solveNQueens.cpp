@@ -39,12 +39,13 @@ public:
         }
     }
 
-    // return whether a queen can be placed in the current row.
-    bool placeRow(vector<string>& board, int row){
+    // we don't care about the return value.
+    // Traversing the whole solution space 
+    void placeRow(vector<string>& board, int row){
         auto N = board.size();
-        if(row > N-1){ // out of bound
+        if(row > N-1){ // out of bound, reach the leaf node.
             res.push_back(board);
-            return false;
+            return;
         }
         for(int col=0; col<N; col++){
             board[row][col]='Q';  // try it.
@@ -53,7 +54,7 @@ public:
             }
             board[row][col]='.'; // reset
         }
-        return true;
+        return;
     }
 
     bool isValidGrid(vector<string>& board, int row, int col){
@@ -78,7 +79,7 @@ public:
 
 int main(){
     Solution s;
-    auto res = s.solveNQueens(10);
+    auto res = s.solveNQueens(1);
     auto nsolutions = res.size();
     cout << "Number of Solutions: " << nsolutions << endl;
     for(int i=0; i< nsolutions; i++){

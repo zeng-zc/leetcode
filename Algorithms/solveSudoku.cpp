@@ -15,20 +15,22 @@ using namespace std;
 // brute force, recursion
 class Solution {
 public:
+    vector<vector<char>> res;
     void solveSudoku(vector<vector<char>>& board) {
         if(board.size() != 9)
             return;
         for(auto it: board)
             if(it.size() != 9)
                 return;
-        solveOnegrid(board, 0, 0);
+        solveOnegrid2(board, 0, 0);
+        board = res;  // we save the final result in res.
         return;
     }
 
-// return whether the *next* grid (row, col+1) can be filled in successfully.
+// return whether the recursively *next* grid (row, col+1) can be filled in successfully.
+// In orther words, wheather the current grid will cause a final successful result.
     bool solveOnegrid(vector<vector<char>>& board, int row, int col) {
-//        cout << "in solveOnegrid: row=" << row << " col=" << col << endl;
-        if(col >= 9)
+        if(col == 9)
             return solveOnegrid(board, row+1, 0);
         if(row == 9)
             return true;
@@ -37,13 +39,39 @@ public:
                 board[row][col] = i + '0'; // try it.
                 if(this->isValidOnegrid(board, row, col))
                     if(solveOnegrid(board, row, col+1))
-                        return true;
-                board[row][col] = '.'; // backtrack
+                        return true;  // Find a solution, return now, and the result
+                                      // in board can be kept.
+                board[row][col] = '.'; // not valid, then reset.
             }
         }else
             return solveOnegrid(board, row, col+1);
-        return false; // we are here because the returns before don't excute.
+        return false; 
     }
+
+    // We don't care about the return value.
+    // notes: after all the return of call, board is in the inial status.
+    // But we can save the final result.
+    void solveOnegrid2(vector<vector<char>>& board, int row, int col) {
+        if(row >= 9){
+            res = board; // save the result, as board will be reset after return. 
+            return;
+        }
+        if(col >= 9){
+            solveOnegrid2(board, row+1, 0);
+            return;
+        }
+        if(board[row][col] == '.'){
+            for(int i=1; i<=9; i++){
+                board[row][col] = i + '0'; // try it.
+                if(this->isValidOnegrid(board, row, col)){
+                    solveOnegrid2(board, row, col+1);
+                }
+                board[row][col] = '.'; // reset
+            }
+        }else
+            solveOnegrid2(board, row, col+1);
+    }
+
 
     // check whether (row, col) gird is valid.
     bool isValidOnegrid(vector<vector<char>>& board, int row, int col) {
@@ -69,16 +97,17 @@ public:
         return true;
     }
 
-};
-
-void print(vector<vector<char>> board){
-    for(auto row: board){
-        for(auto col: row)
-            cout << col;
-        cout << endl;
+    void printboard(vector<vector<char>> board){
+        for(auto row: board){
+            for(auto col: row)
+                cout << col;
+            cout << endl;
+        }
+        return;
     }
-    return;
-}
+
+
+};
 
 int main(){
     vector<vector<char>> board;
@@ -96,11 +125,11 @@ int main(){
         vector<char> tmp(it->begin(), it->end());
         board.push_back(tmp);
     }
-    print(board);
-    cout << endl;
     Solution s;
+    s.printboard(board);
+    cout << endl;
     s.solveSudoku(board);
-    print(board);
+    s.printboard(board);
     return 0;
 }
 
