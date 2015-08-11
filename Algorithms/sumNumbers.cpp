@@ -58,36 +58,17 @@ public:
         return res;
     }
 
-    /* The below version has bugs. Wring result for [1,0] input.
-    vector<int> root2leafNumbers2(TreeNode *root){
-        vector<int> res;
-        if(root == nullptr)
-            return res;
-        if(root->left == nullptr && root->right == nullptr){ // leaf node
-            res.push_back(root->val);
-            return res;
-        }
-        res = root2leafNumbers2(root->left);
-        for(auto it=res.begin(); it != res.end(); it++){
-            *it = *it *10 + root->val;
-        }
-        auto tmp = root2leafNumbers2(root->right);
-        for(auto it=tmp.begin(); it != tmp.end(); it++){
-            *it = *it *10 + root->val;
-        }
-        res.insert(res.end(), tmp.begin(), tmp.end());
-        return res;
-    }
-
-    int reverseInt(int x){ // turn 123 to 321
-        int res = 0;
-        do {
-            int lowbit = x % 10;
-            x = x/10;
-            res = res * 10 + lowbit;
-        }while(x != 0);
-        return res;
-    }
-    */
-
 };
+
+/* notes:
+ * Many details need to be taked care of.
+ * note string::insert APIs.
+ *
+ * If we use it->insert(0, 1, root->val+'0') instead of to_string,
+ * GCC will give the following warning:
+ * "warning: narrowing conversion of ‘(root->TreeNode::val + 48)’ from ‘int’
+ * to ‘char’ inside { } [-Wnarrowing]"
+ *
+ * If we use vector<int> to store the result of root2leafNumbers, 
+ * it will give wrong answers for [1, 0] input.
+ */
