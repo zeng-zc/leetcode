@@ -23,7 +23,9 @@ But the following is not:
  *     struct TreeNode *right;
  * };
  */
-// 算法：
+// 下面写了两个版本。
+
+// 算法1：
 // 先将其中一颗子树翻转，然后比较两个子树是否相等。
 // 这两个过程在之前都练过了。
 bool isSameTree(struct TreeNode* p, struct TreeNode* q);
@@ -73,9 +75,27 @@ struct TreeNode* invertTree(struct TreeNode* root) {
  *      两个结果是否一致。这个错误本质上跟上面的是一样的。
  */
 
-// 另外，我还写了一个非递归的版本，用C++写的，参考另外一个文件。
+// 上面的版本实际上遍历了两遍（一遍用于翻转，一遍用于比较）
+// 下面写一个更加精简的版本，只遍历一遍，略去翻转操作。
 
-// 下面尝试写一个非递归版本
-// 使用层序遍历，因为非递归的层序遍历在逻辑上比较好理解，使用队列。
-//
+bool compare_left_right(struct TreeNode *left, 
+        struct TreeNode *right);
 bool isSymmetric(struct TreeNode* root) {
+    if(root == NULL)
+        return 1;
+    return compare_left_right(root->left, root->right);
+}
+
+bool compare_left_right(struct TreeNode *left, 
+        struct TreeNode *right){
+    if(left == NULL && right == NULL)
+        return 1;
+    if(left == NULL && right != NULL)
+        return 0;
+    if(left != NULL && right == NULL)
+        return 0;
+    if(left->val != right->val)
+        return 0;
+    return compare_left_right(left->left, right->right) &&
+            compare_left_right(left->right, right->left);
+}
