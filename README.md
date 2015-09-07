@@ -7,6 +7,6 @@ and a few in Python, while the *Shell* section is in Perl.
 
 A lot of the problems are solved in several ways, i.e. the naiive one and improved one.
 
-Advices and discussions are welcome to Email to zzchao03@163.com.
+Advices and discussions are welcome to Email to zengzhongchao@gmail.com.
 
 Enjoy it.
