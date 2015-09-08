@@ -14,13 +14,11 @@
 #include <stdio.h>
 #include <stdlib.h>
  struct ListNode {
-
       int val;
-
       struct ListNode *next;
-
  };
 
+// iterative version
 struct ListNode* reverseList(struct ListNode* head) {
     struct ListNode *next, *pre=NULL, *cur=head;
     while(cur != NULL){  // cur 表示当前要处理的节点
@@ -31,9 +29,22 @@ struct ListNode* reverseList(struct ListNode* head) {
     }
     return pre;
 }
-// 容易犯错的一个坑：
-// 那个 while 循环很容易无脑写成 while(cur->next != NULL)，
-// 这样的话，最后一个节点就没有被处理（即next指针没被修改）
+
+// recursive version
+struct ListNode* reverseList2(struct ListNode* head) {
+    struct ListNode *next;
+    if(head == NULL)
+        return NULL;
+    next = head->next;
+    if(next == NULL)
+        return head;
+    else{
+        head->next = NULL;
+        struct ListNode *newhead = reverseList2(next);
+        next->next = head;
+        return newhead;
+    }
+}
 
 void print(struct ListNode * node){
     while(node != NULL){
@@ -53,7 +64,8 @@ int main(){
     node2->next=NULL;
     list=node1;
     print(list);
-    print(reverseList(list));
+//    print(reverseList(list));
+    print(reverseList2(list));
     return 0;
 }
 
