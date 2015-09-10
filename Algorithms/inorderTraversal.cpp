@@ -1,21 +1,12 @@
 // https://leetcode.com/problems/binary-tree-inorder-traversal/
-
 /**
-
  * Definition for a binary tree node.
-
  * struct TreeNode {
-
  *     int val;
-
  *     TreeNode *left;
-
  *     TreeNode *right;
-
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-
  * };
-
  */
 
 #include <stack>
@@ -51,7 +42,27 @@ public:
         }
         return vi;
     }
+// OJ score: 4ms
 
+    // iteration version2, implement the algorith on wiki
+    // https://en.wikipedia.org/wiki/Tree_traversal
+    vector<int> inorderTraversal_iter3(TreeNode* root) {
+        stack<TreeNode *> stree;
+        vector<int> vi;
+        while(!stree.empty() || root != nullptr){
+            if(root != nullptr){
+                stree.push(root);
+                root = root->left;
+            }else{
+                root = stree.top();
+                stree.pop();
+                vi.push_back(root->val);
+                root = root->right;
+            }
+        }
+        return vi;
+    }
+// OJ score: 0ms.
 };
 
 /*notes:

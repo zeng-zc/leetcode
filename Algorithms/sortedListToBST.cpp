@@ -28,11 +28,10 @@ public:
         TreeNode* sortedListToBST(ListNode* head) {
             if(head == nullptr)
                 return nullptr;
-            ListNode *fast=head, *slow=head, *preSlow=nullptr, *preFast=nullptr;
+            ListNode *fast=head, *slow=head, *preSlow=nullptr;
             while(fast != nullptr && fast->next != nullptr){
                 preSlow = slow;
                 slow = slow->next;
-                preFast = fast;
                 fast = fast->next->next;
             }
             if(preSlow == nullptr)
