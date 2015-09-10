@@ -65,7 +65,7 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
 
 
 /* notes:
- * 虽然逻辑比较简单，很写代码的过程很容易出错。
+ * 虽然逻辑比较简单，但写代码的过程很容易出错。
  * （1）各种检查非NULL 指针；
  * （2）各种循环的截止条件
  */

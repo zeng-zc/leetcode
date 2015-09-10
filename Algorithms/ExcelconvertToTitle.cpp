@@ -1,18 +1,27 @@
-// 这个C++ 版本为什么不对？？？
+// https://leetcode.com/problems/excel-sheet-column-title/
 #include <string>
-using namespace std;
 class Solution {
-    public:
-        string convertToTitle(int n) {
-            string str;
-            do{
-                str.insert(0, (char)n%26+('A'-1));
-                n = n/26;
-            }while(n != 0);
-            return str;
-        }
+public:
+    string convertToTitle(int n) {
+            string str;  
+            while(n){  
+                int r=n%26;  
+                n=n/26;  
+                if(r==0){   //为26的整数倍，该位设置为Z，n减掉1  
+                    str+='Z';  
+                    n--;  
+                }else{  
+                    str+=('A'+r-1);  
+                }  
+            }  
+            //反转  
+            string result;  
+            for(int i=str.size()-1;i>=0;i--){  
+                result+=str[i];  
+            }  
+            return result;  
+        }        
 };
-
 int main(){
     Solution s;
     cout << s.convertToTitle(28) << endl;

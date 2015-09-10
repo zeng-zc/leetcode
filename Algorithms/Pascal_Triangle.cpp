@@ -1,6 +1,7 @@
+// https://leetcode.com/problems/pascals-triangle/
 /*
- * https://leetcode.com/problems/pascals-triangle/
-Given numRows, generate the first numRows of Pascal's triangle.
+ * 
+ * Given numRows, generate the first numRows of Pascal's triangle.
 
 For example, given numRows = 5,
 Return
