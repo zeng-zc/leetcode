@@ -4,34 +4,40 @@ use strict;
 use HTTP::Tiny;
 use v5.16;  ## say
 
-my $url = 'https://leetcode.com/problemset/algorithms/';
-#my $url = 'file:///Users/zengzc/programming/leetcode/script/Problems | LeetCode OJ.html';
-my $response = HTTP::Tiny->new->get($url);
+my @urls = qw\https://leetcode.com/problemset/algorithms 
+    https://leetcode.com/problemset/shell/\;
+my $html;
+for my $url (@urls){
+    my $response = HTTP::Tiny->new->get($url);
 #print $response;
-die "Failed!\n" unless $response->{success};
+    die "Failed!\n" unless $response->{success};
 #print "$response->{status} $response->{reason}\n";
 
-my $html = $response->{content};
+    my $doc = $response->{content};
 #print $html;
-die "No html in \$html!\n" unless length $html;
+    die "No html in \$doc!\n" unless length $doc;
+    $html = $html.$doc;
+}
 
 ## get answer files and corresponding url.
-my $dir = './Algorithms';
-opendir(my $dh, $dir) || die "can't opendir $dir: $!";
 my %answers;  ## key=filename, value=url;
-while(readdir $dh){
-    if(lc $_ =~ /(cpp|c|py)$/){
-        open my $ansfh, '<', "$dir/$_" or die $!;
-        my $url;
-        while(my $line = <$ansfh>){
-            $url = $1 if($line =~ m/(https:.*$)/);
-            last if $.==3;
+my @dirs = qw \./Algorithms ./Shell\;
+for my $dir (@dirs){
+    opendir(my $dh, $dir) || die "can't opendir $dir: $!";
+    while(readdir $dh){
+        if(lc $_ =~ /(cpp|c|py|sh|pl)$/){
+            open my $ansfh, '<', "$dir/$_" or die $!;
+            my $url;
+            while(my $line = <$ansfh>){
+                $url = $1 if($line =~ m/(https:.*$)/);
+                last if $.==3;
+            }
+            close $ansfh;
+            $answers{"$dir/$_"} = $url if(defined($url));
         }
-        close $ansfh;
-        $answers{$_} = $url if(defined($url));
     }
+    close $dh;
 }
-close $dh;
 
 # generate result file.
 #open my $fh, ">", "readme.md.catalogue";
@@ -53,18 +59,14 @@ while($html =~ m{<td>(?<num>\d+)</td>.*?<a href="(?<loc>.*?)">(?<title>.*?)</a>.
                 $language = "C";
             }elsif (lc $_ =~ /\.py$/){
                 $language = "Python";
+            }elsif (lc $_ =~ /\.sh$/){
+                $language = "Shell";
+            }elsif (lc $_ =~ /\.pl$/){
+                $language = "Perl";
             }
-            say $fh "$count\t| $num\t | [$title]($loc)\t| $difficulty\t| [$language]($dir/$_)";
+            say $fh "$count\t| $num\t | [$title]($loc)\t| $difficulty\t| [$language]($_)";
         }
     }
 }
 close $fh;
-
-=pod
-    print "\$num=${num}\n";
-    print "\$loc=${loc}\n";
-    print "\$title=${title}\n";
-    print "\$difficulty=${difficulty}\n";
-=cut
-
 
