@@ -1,5 +1,5 @@
-# encoding: utf-8
 # https://leetcode.com/problems/pascals-triangle/
+# encoding: utf-8
 
 
 class Solution:

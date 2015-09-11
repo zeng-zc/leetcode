@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+// https://leetcode.com/problems/bitwise-and-of-numbers-range/#include <iostream>
 
 /* Algorithm:
  * 2 consecutive number AND will cause 1 lowest bit to be 0.
@@ -24,6 +23,7 @@ using namespace std;
  *  (2) The p lowest bit of the final result will be zero.
  *
  */
+using namespace std;
 class Solution {
     public:
         int rangeBitwiseAnd(int m, int n) {
@@ -40,7 +40,6 @@ class Solution {
         }
 };
 
-using namespace std;
 int main(){
     Solution s;
     cout << s.rangeBitwiseAnd(3, 4) << endl;

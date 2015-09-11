@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/power-of-two/
 #include <stdio.h>
 typedef enum {false, true} bool;
 bool isPowerOfTwo(int n) {
