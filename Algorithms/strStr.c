@@ -24,10 +24,6 @@ int strStr(char* haystack, char* needle) {
     }
     return -1;
 }
-/* notes:
- * If we write the while loop just as 'while(*cur_hay){...}',
- * it will be reject as *Time Limit Exceeded* on leetcode.
- */
 
 int main(){
     char hay[] = "iloveleetcode";

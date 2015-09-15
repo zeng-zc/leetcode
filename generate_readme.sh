@@ -14,4 +14,4 @@ Advices and discussions are welcome to Email to zengzhongchao@gmail.com.
 Enjoy it.
 
 EOF
-./generate_readme_catalogue.pl >> README.md
+./generate_readme_catalogue.pl

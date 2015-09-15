@@ -11,7 +11,7 @@ for my $url (@urls){
     my $response = HTTP::Tiny->new->get($url);
 #print $response;
     die "Failed!\n" unless $response->{success};
-#print "$response->{status} $response->{reason}\n";
+print "$url: $response->{status} $response->{reason}\n";
 
     my $doc = $response->{content};
 #print $html;
@@ -38,17 +38,19 @@ for my $dir (@dirs){
     }
     close $dh;
 }
+say "Having obtained URL from solution files.";
 
 # generate result file.
-#open my $fh, ">", "readme.md.catalogue";
-my $fh =*STDOUT;
+open my $fh, ">>", "README.md";
+#my $fh =*STDOUT;
 say $fh "# Catalogue";
 say $fh " No.|  # | Title | Difficulty | Solution";
 say $fh " ----|----|-------------|-----------|--------";
 my $count=0;
-while($html =~ m{<td>(?<num>\d+)</td>.*?<a href="(?<loc>.*?)">(?<title>.*?)</a>.*?<td value='\d'>(?<difficulty>\w+)</td>}smg){
+while($html =~ m{<td>(\d+)</td>.*?<a href="(.*?)">(.*?)</a>.*?<td value='.*?'>(\w+)</td>}smg){
     my ($num, $loc, $title, $difficulty) = ($1, $2, $3, $4);
     $loc = 'https://leetcode.com'.$2;
+#    say STDOUT "$num\n $loc\n$title\n$difficulty";
     for(keys %answers){
         if($loc =~ $answers{$_}){
             $count++;
@@ -65,6 +67,7 @@ while($html =~ m{<td>(?<num>\d+)</td>.*?<a href="(?<loc>.*?)">(?<title>.*?)</a>.
                 $language = "Perl";
             }
             say $fh "$count\t| $num\t | [$title]($loc)\t| $difficulty\t| [$language]($_)";
+            say STDOUT "$count\t| $num\t | [$title]($loc)\t| $difficulty\t| [$language]($_)";
         }
     }
 }
