@@ -56,6 +56,32 @@ void reverseWords(char *s) {
     }
 }
 
+// improved a little.
+// uniform cases.
+void reverseWords2(char *s) {
+    int beg=0, end=0;
+    char *cur=s;
+    removeDupSpace(s);
+    if(*s == '\0')
+        return;
+    while(1){
+        if(*cur == '\0'){ // last word
+            end = cur-1-s;
+            reverse(s, beg, end);
+            break;
+        }
+        if(isspace(*cur)){
+            end = cur-1-s;
+            reverse(s, beg, end);
+            beg = (++cur) - s;
+        }else
+            cur++;
+    }
+    reverse(s, 0, cur-s-1);
+    // No need to reverse if only one word.
+}
+
+
 void reverse (char *s, int beg, int end){
     for(int i=beg, j=end; i<j; i++, j--){
         char tmp=s[i];
@@ -86,11 +112,11 @@ void removeDupSpace(char *s){
 int main(){
     char s[]=" we love   leetcode  ";
     printf("original s: /%s/\n", s);
-    reverseWords(s);
+    reverseWords2(s);
     printf("after s: /%s/\n", s);
     char s2[]="  leetcode  ";
     printf("original s2: /%s/\n", s2);
-    reverseWords(s2);
+    reverseWords2(s2);
     printf("after s2: /%s/\n", s2);
     return 0;
 }
