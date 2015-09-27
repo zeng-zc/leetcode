@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/string-to-integer-atoi/
+
 #include <stdio.h>
 #include <limits.h>
 #include <ctype.h>
@@ -26,6 +28,7 @@ int myAtoi(char* str) {
     return sign * res;
 }
 // 注意： INT_MIN 是个 int，所以 -INT_MIN 已经发生了overflow，一定要显式的进行类型转换。
+// res > -(long)INT_MIN 这个版本只用 4ms; 而-res < INT_MIN 版本要用 8ms
 
 int main(){
     char *s="-1";
