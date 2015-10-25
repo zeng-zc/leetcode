@@ -61,11 +61,11 @@ void reverseWords(char *s) {
 void reverseWords2(char *s) {
     int beg=0, end=0;
     char *cur=s;
-    removeDupSpace(s);
+    removeDupSpace(s);  // first pass
     if(*s == '\0')
         return;
-    while(1){
-        if(*cur == '\0'){ // last word
+    while(1){   // second pass
+        if(*cur == '\0'){ // last char
             end = cur-1-s;
             reverse(s, beg, end);
             break;
@@ -77,7 +77,7 @@ void reverseWords2(char *s) {
         }else
             cur++;
     }
-    reverse(s, 0, cur-s-1);
+    reverse(s, 0, cur-s-1);   // third pass
     // No need to reverse if only one word.
 }
 
@@ -91,6 +91,7 @@ void reverse (char *s, int beg, int end){
 }
 
 // remove duplicate spaces.
+// only keep space between words.
 void removeDupSpace(char *s){
     char *dsc=s, *cur=s, *pre=NULL;
     while(*cur){

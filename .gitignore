@@ -1,0 +1,11 @@
+*.*
+script/
+Algorithms/to_be_implemented/
+!*.c
+!*.cpp
+!*.py
+!*.pl
+!*.sh
+!README.md
+!.gitignore
+!LICENSE
