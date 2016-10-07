@@ -11,34 +11,31 @@ You may assume no duplicate exists in the array.
  *    (1) find the pivot using binary search;
  *    (2) search target in the two parts(before the pivot and after)
  *      using binary search.
+ * 
+ * 改进：
+ *      使用C标准库中的bsearch
  */
 int find_minimum(int *nums, int beg, int end);
-int bisearch(int *nums, int beg, int end, int target);
+int compare(const void *i1, const void *i2);
 int search(int* nums, int numsSize, int target) {
     if(numsSize<=0)
         return 0;
     int index = find_minimum(nums, 0, numsSize-1);
-    int res1 = bisearch(nums, 0, index-1, target);
-    if(res1 != -1){
-        return res1;
-    } else {
-        res2 = bisearch(nums, index, numsSize-1, target);
-        if(res2 != -1)
-            return res2;
-        else 
+    void *ret1 = bsearch(&target, nums, index, sizeof(int), compare);
+    if (ret1)
+        return (int *)ret1 - nums;  // 注意返回值为下标
+    else {
+        void *ret2 = bsearch(&target, nums+index, numsSize-index, sizeof(int), compare);
+        if (ret2)
+            return (int *)ret2 - nums;
+        else
             return -1;
     }
 }
-int bisearch(int *nums, int beg, int end, int target) { // in a sorted array
-    if(beg > end)
-        return -1;
-    int mid = (beg + end)/2;
-    if(target > nums[mid])
-        return bisearch(nums, mid+1, end, target);
-    else if(target < nums[mid])
-        return bisearch(nums, beg, mid-1, target);
-    else
-        return mid;
+
+int compare(const void *i1, const void *i2)
+{
+    return *(int *)i1 - *(int *)i2;
 }
        
 int find_minimum(int *nums, int beg, int end){ // return the index of minimum element.

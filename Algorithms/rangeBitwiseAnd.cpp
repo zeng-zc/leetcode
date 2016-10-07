@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/bitwise-and-of-numbers-range/#include <iostream>
+// https://leetcode.com/problems/bitwise-and-of-numbers-range/
 
 /* Algorithm:
  * 2 consecutive number AND will cause 1 lowest bit to be 0.
