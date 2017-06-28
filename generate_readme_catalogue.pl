@@ -108,8 +108,8 @@ sub output {
         } keys %$index_table;
     open my $fh, ">>", "README.md";
     say $fh "# Catalogue";
-    say $fh " No.|  # | Title | Difficulty | Solution";
-    say $fh " ----|----|-------------|-----------|--------";
+    say $fh " No.| # in leetcode | Title | Difficulty | Solution";
+    say $fh " ----|---------------|-------------|-----------|--------";
     my $count = 1;
     foreach (@sorted_keys) {
         my ($num, $title, $url, $difficulty, $language) = @{$index_table->{$_}};
