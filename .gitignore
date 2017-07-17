@@ -1,8 +1,9 @@
-*.*
 !Shell/*
 Shell/*.*~
 !Algorithms/*
 Algorithms/*.*~
 Algorithms/*.out
 Algorithms/*.swp
+*.bin
+a.out
 

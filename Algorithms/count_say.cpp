@@ -37,3 +37,4 @@ public:
 private:
     std::map<int, std::string> table;
 };
+
